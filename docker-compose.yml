@@ -1,0 +1,25 @@
+services:
+  ingest:
+    build:
+      context: .
+      target: ingest
+    volumes:
+      - ./data:/app/data
+      - ./ingest/.cache:/app/ingest/.cache
+      - hf_cache:/root/.cache/huggingface
+    environment:
+      - NODE_ENV=production
+
+  dev:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data:ro
+      - hf_cache:/root/.cache/huggingface
+    stdin_open: true
+    tty: true
+
+volumes:
+  hf_cache:

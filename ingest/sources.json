@@ -1,0 +1,407 @@
+{
+  "wsaa": {
+    "name": "WSAA — Autenticación y Autorización",
+    "description": "Obtención del Ticket de Acceso (TA) mediante certificado digital X.509. Necesario para consumir cualquier WS de negocio de ARCA/AFIP.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSAA/WSAAmanualDev.pdf",
+      "https://www.afip.gob.ar/ws/WSAA/Especificacion_Tecnica_WSAA_1.2.2.pdf",
+      "https://www.afip.gob.ar/ws/WSAA/wsaa_obtener_certificado_produccion.pdf",
+      "https://www.afip.gob.ar/ws/WSAA/wsaa_asociar_certificado_a_wsn_produccion.pdf",
+      "https://www.afip.gob.ar/ws/documentacion/wsaa.asp"
+    ]
+  },
+  "certificados": {
+    "name": "Certificados Digitales y WSASS",
+    "description": "Obtención, asociación y delegación de certificados digitales. Uso del Administrador de Certificados Digitales y WSASS (Autoservicio de Acceso a APIs de Homologación).",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSASS/WSASS_como_adherirse.pdf",
+      "https://www.afip.gob.ar/ws/WSASS/WSASS_manual.pdf",
+      "https://www.afip.gob.ar/ws/WSAA/WSAA.ObtenerCertificado.pdf",
+      "https://www.afip.gob.ar/ws/WSAA/ADMINREL.DelegarWS.pdf",
+      "https://www.afip.gob.ar/ws/documentacion/certificados.asp"
+    ]
+  },
+  "wsass_homo": {
+    "name": "WSASS — Manual del Usuario (Homologación)",
+    "description": "Manual paso a paso del entorno de Homologación: cómo generar CSR, crear certificados, autorizar accesos, agregar alias, ver servicios disponibles y gestionar autorizaciones en el ambiente de testing.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSASS/html/",
+      "https://www.afip.gob.ar/ws/WSASS/html/introduccion.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/funcionalidades.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/conceptos.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/generarcsr.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/crearcertificado.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/crearautorizacion.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/agregarcertificado.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/verservicios.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/vercertificados.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/verautorizaciones.html",
+      "https://www.afip.gob.ar/ws/WSASS/html/eliminarautorizacion.html"
+    ]
+  },
+
+  "wsfev1": {
+    "name": "WSFEv1 — Factura Electrónica (comprobantes A/B/C/M)",
+    "description": "Autorización de comprobantes electrónicos tipo A, B, C y M sin detalle de ítem. CAE y CAEA. R.G. N° 4.291. El WS más usado para emisión de facturas.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentacion/manuales/manual-desarrollador-ARCA-COMPG-v4-1.pdf",
+      "https://www.afip.gob.ar/fe/ayuda/documentos/wsfev1-RG-4291.pdf",
+      "https://www.afip.gob.ar/ws/documentacion/ws-factura-electronica.asp",
+      "https://wswhomo.afip.gov.ar/wsfev1/service.asmx?WSDL"
+    ]
+  },
+  "wsmtxca": {
+    "name": "WSMTXCA — Factura Electrónica con detalle (Cód. MTX)",
+    "description": "Autorización de comprobantes A y B con detalle de ítems. Incluye código de producto MTX. CAE y CAEA. R.G. N° 2.904.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentacion/manuales/Web-Service-MTXCA-v25.pdf",
+      "https://www.afip.gob.ar/fe/ayuda/documentos/wsmtxca-RG-2904.pdf"
+    ]
+  },
+  "wsbfev1": {
+    "name": "WSBFEv1 — Bonos Fiscales Electrónicos",
+    "description": "Autorización de comprobantes para bienes de capital y acceso al beneficio de Bonos Fiscales Electrónicos. R.G. N° 5427/2023 y R.G. N° 2.861.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentacion/manuales/WSBFEV1-ManualParaElDesarrollador_ARCA_V3_0.pdf",
+      "https://www.afip.gob.ar/fe/ayuda/documentos/wsbfev1-RG-5427-y-2861.pdf",
+      "https://wswhomo.afip.gov.ar/wsbfev1/service.asmx?WSDL"
+    ]
+  },
+  "wsfex": {
+    "name": "WSFEXv1 — Factura Electrónica de Exportación",
+    "description": "Autorización de comprobantes tipo E para operaciones de exportación. R.G. N° 2.758.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentacion/manuales/WSFEX-Manualparaeldesarrollador_V3.1.1_ARCA.pdf",
+      "https://wswhomo.afip.gov.ar/wsfexv1/service.asmx?WSDL"
+    ]
+  },
+  "wsct": {
+    "name": "WSCT — Comprobantes T (Turismo)",
+    "description": "Comprobantes T destinados a servicios de alojamiento a turistas extranjeros. R.G. N° 3.971.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentacion/manuales/Manual_Desarrollador_WSCT_v1.6.4.pdf",
+      "https://fwshomo.afip.gov.ar/wsct/CTService?WSDL"
+    ]
+  },
+  "wsseg": {
+    "name": "WSSEG — Seguros de Caución",
+    "description": "Emisión de pólizas de Seguros de Caución. R.G. N° 2.668.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentacion/manuales/WSSEG-ManualParaElDesarrollador_ARCA.pdf",
+      "https://www.afip.gob.ar/fe/ayuda/documentos/wsseg-RG-2668.pdf",
+      "https://www.afip.gob.ar/ws/WSSEG/WSSEG-GuiaAdicionalParaElProgramador.pdf"
+    ]
+  },
+
+  "ws_sr_constancia_inscripcion": {
+    "name": "WS-SR-ConstanciaInscripcion — Constancia de Inscripción",
+    "description": "Obtención de la constancia de inscripción de un contribuyente con datos de padrón, impuestos y actividades.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSCI/manual_ws_sr_ws_constancia_inscripcion.pdf"
+    ]
+  },
+  "ws_sr_padron_a4": {
+    "name": "WS-SR-Padron-A4 — Consulta a Padrón Alcance 4",
+    "description": "Consulta al padrón de contribuyentes - nivel básico (CUIT, razón social, estado).",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/ws_sr_padron_a4/manual_ws_sr_padron_a4_v1.3.pdf",
+      "https://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA4?WSDL"
+    ]
+  },
+  "ws_sr_padron_a5": {
+    "name": "WS-SR-Padron-A5 — Consulta a Padrón Alcance 5",
+    "description": "Consulta al padrón de contribuyentes - nivel 5.",
+    "entrypoints": [
+      "https://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA5?WSDL"
+    ]
+  },
+  "ws_sr_padron_a10": {
+    "name": "WS-SR-Padron-A10 — Consulta a Padrón Alcance 10",
+    "description": "Consulta al padrón de contribuyentes - nivel 10 con datos adicionales.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/ws_sr_padron_a10/manual_ws_sr_padron_a10_v1.2.pdf",
+      "https://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA10?WSDL"
+    ]
+  },
+  "ws_sr_padron_a13": {
+    "name": "WS-SR-Padron-A13 — Consulta a Padrón Alcance 13",
+    "description": "Consulta al padrón de contribuyentes - nivel 13 con domicilio fiscal e impuestos inscriptos.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/ws-padron-a13/manual-ws-sr-padron-a13-v1.3.pdf",
+      "https://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA13?WSDL"
+    ]
+  },
+  "ws_sr_padron_a100": {
+    "name": "WS-SR-Padron-A100 — Consulta a Padrón Alcance 100",
+    "description": "Consulta al padrón de contribuyentes - nivel máximo con datos completos.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/ws_sr_padron_a100/manual_ws_sr_padron_a100_v2.1.pdf"
+    ]
+  },
+
+  "wscdcv1": {
+    "name": "WSCDCV1 — Constatación de Comprobantes",
+    "description": "Verificación dinámica de comprobantes recibidos para confirmar que se encuentran autorizados por ARCA.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSCDCV1/WSCDC-manual-desarrollador-v4.pdf"
+    ]
+  },
+
+  "wscpe": {
+    "name": "WSCPE — Carta de Porte Electrónica",
+    "description": "Carta de Porte Electrónica para traslado de productos primarios y derivados.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentos/manual-wscpe.pdf"
+    ]
+  },
+  "wscta": {
+    "name": "WSCTA — Certificados DNRPA (CETA)",
+    "description": "Consulta por parte de la Dirección Nacional de los Registros de la Propiedad Automotor de los Certificados de Transferencia de Automotores (CETA).",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSCTA/WSCTA-ManualParaElDesarrollador.pdf"
+    ]
+  },
+
+  "wsagr": {
+    "name": "WSAGR — AGR (Reproweb)",
+    "description": "Régimen de Reintegro del Impuesto al Valor Agregado - Ley 26.360. R.G. N° 4035.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/agrREPROWEB/manual_desarrollador_wsagr.pdf"
+    ]
+  },
+  "wsbfe_legacy": {
+    "name": "WSBFE — Bonos Fiscales Electrónicos (legacy)",
+    "description": "Versión legacy de WSBFE. Autorización de comprobantes electrónicos para gestionar Bonos en la Secretaría de Industria según R.G. 2557.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSBFE/WSBFE%20-%20Manual%20para%20el%20desarrollador_V1_1.pdf",
+      "https://www.afip.gob.ar/ws/WSBFE/WSBFE-GuiaAdicionalParaElProgramador.pdf"
+    ]
+  },
+
+  "wscec": {
+    "name": "WSCEC — Comprobantes Ley Economía del Conocimiento",
+    "description": "Consulta de comprobantes sujetos a la Ley de Economía del Conocimiento.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/wscec/manual-wscec.pdf"
+    ]
+  },
+  "wsapoc": {
+    "name": "WSAPOC — Contribuyentes Apócrifos",
+    "description": "Consulta de contribuyentes declarados apócrifos.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/wsapoc/ManualUsuario-1.0.9.pdf"
+    ]
+  },
+
+  "sud_contrataciones": {
+    "name": "SUD-Contrataciones — Servicio de Deuda Proveedores del Estado",
+    "description": "Consulta del servicio de deuda para proveedores del Estado.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/SudContrataciones/manual_sud_contrataciones.pdf"
+    ]
+  },
+  "sud_restricciones": {
+    "name": "SUD-Restricciones — Servicio de Deuda",
+    "description": "Consulta del servicio de deuda y restricciones asociadas.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/SudRestricciones/manual_sud_restricciones_1.3.pdf"
+    ]
+  },
+
+  "wsccomu": {
+    "name": "WSCComu — Comunicaciones de Ventanilla Electrónica",
+    "description": "Consumir comunicaciones de Ventanilla Electrónica.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSCComu/vecuwsconcomunicaciones.pdf"
+    ]
+  },
+  "wscreatevep": {
+    "name": "WSCREATEVEP — Creación de VEPs",
+    "description": "Creación de Volantes Electrónicos de Pago para entidades externas.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSCREATEVEP/ManualParaElDesarrolladorDelCreateVEPwebService.pdf"
+    ]
+  },
+
+  "jaza": {
+    "name": "JAZA Service — Juegos de Azar",
+    "description": "Web service para informar datos de juegos de azar.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/juegosdeazar/documentos/Web_Service_JAZA_20240122_v1.0.5.pdf"
+    ]
+  },
+
+  "wslum": {
+    "name": "WSLUM — Liquidación Mensual Única (Lechería)",
+    "description": "Liquidación mensual única del sector lechero.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/wslum/manual_wslum1.4.pdf"
+    ]
+  },
+  "wslca": {
+    "name": "WSLCA — Liquidación de Caña de Azúcar",
+    "description": "Liquidación de operaciones con caña de azúcar.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSLCA/manual_wslca.pdf"
+    ]
+  },
+  "wsltv": {
+    "name": "WSLTV — Liquidación de Tabaco Verde",
+    "description": "Liquidación de operaciones con tabaco verde.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/tabaco/manual-wsltv-1.4.pdf"
+    ]
+  },
+  "wslpg": {
+    "name": "WSLPG — Liquidación Primaria de Granos",
+    "description": "Liquidación primaria de operaciones de compraventa de granos.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSLiquiGranos/manual_wslpg_1.24.pdf"
+    ]
+  },
+  "wslsp": {
+    "name": "WSLSP — Liquidación Sector Pecuario",
+    "description": "Liquidación de operaciones del sector pecuario.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSLSP/manual-wslsp-2.0.4.pdf"
+    ]
+  },
+
+  "wsddjj": {
+    "name": "WSDDJJ — Presentación de DDJJ",
+    "description": "Presentación de Declaraciones Juradas.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/wsddjj/WSPresentaciondeDDJJManualparaelDesarrollador.pdf"
+    ]
+  },
+  "wsrgiva": {
+    "name": "WSRGIVA — Régimen Percepción IVA",
+    "description": "Web service del régimen de percepción de IVA.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentacion/manuales/manualdesarrolladorWSRGIVA.pdf"
+    ]
+  },
+  "wstabaco": {
+    "name": "WSTABACO — Régimen Tabacalero",
+    "description": "Régimen tabacalero.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSTABACO/Manual_Desarrollador_WSTABACO_v1_0.pdf"
+    ]
+  },
+
+  "wsicdb": {
+    "name": "WSICDB — Registro de Beneficios Fiscales ICDB",
+    "description": "Registro de Beneficios Fiscales en el Impuesto sobre los Créditos y Débitos en Cuentas Bancarias y Otras operatorias.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/registroICBD/manual_wsicdb1.2.pdf"
+    ]
+  },
+
+  "wsremharina": {
+    "name": "WSREMHARINA — Remito Harinas de Trigo",
+    "description": "Remito de harinas de trigo y subproductos derivados de la molienda de trigo.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/remitoHTSDMT/Manual_Desarrollador_WSREMHARINA_v2.9.pdf"
+    ]
+  },
+  "wsremazucar": {
+    "name": "WSREMAZUCAR — Remito Electrónico Azúcar",
+    "description": "Remito Electrónico para Azúcar, Alcohol y Subproductos.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/remitoElecAzucar/Manual-DesarrolladorWSREMAZUCAR%20v2_0_9.pdf"
+    ]
+  },
+  "wsremcarne": {
+    "name": "WSREMCARNE — Remito Electrónico Cárnico",
+    "description": "Remito Electrónico Cárnico para el traslado de carnes y subproductos.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/remitoElecCarnico/Manual_Desarrollador_WSREMCARNE_v3_6.pdf"
+    ]
+  },
+
+  "sire_iva": {
+    "name": "SIRE-IVA — Sistema Integral de Retenciones Electrónicas",
+    "description": "Sistema Integral de Retenciones Electrónicas para IVA.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/sistemaIntegralRetenElect/SOAP-SIRE-IVA-Manualparaeldesarrollador_V1_0_0.pdf"
+    ]
+  },
+  "trabajo_f931": {
+    "name": "Trabajo F931 — SIPA DDJJ F931",
+    "description": "Presentación de Declaración Jurada F931 del Sistema Integrado Previsional Argentino.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/TRABAJO_F931/TrabajoF931-ManualParaElDesarrollador.pdf"
+    ]
+  },
+
+  "wdiautides": {
+    "name": "WDIAUTIDES — Actualización/Consulta PEMA",
+    "description": "Actualización y consulta PEMA.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WDIAUTIDES/ManualDesarrollador-WdiaUtiDEs.pdf"
+    ]
+  },
+  "wgesinv": {
+    "name": "WGESINV — Despachos INV Vitivinicultura",
+    "description": "Aprobar y denegar despachos del Instituto Nacional de Vitivinicultura.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WGESINV/wgesinv-ManualParaElDesarrollador.pdf"
+    ]
+  },
+  "wgestabref": {
+    "name": "WGESTABREF — Consulta de Tablas de Referencia",
+    "description": "Consulta de tablas de referencia para sistemas aduaneros.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentos/Manual_del_Desarrollador_wgestabref.pdf"
+    ]
+  },
+  "wconsdepfiel": {
+    "name": "WConsDepFiel — Consultas Depositario Fiel",
+    "description": "Consultas del Depositario Fiel.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentos/Manual-Desarrollador-wConsDepFiel.pdf"
+    ]
+  },
+  "wgestiendaslibres": {
+    "name": "WGESTiendasLibres — Control stock tiendas libres",
+    "description": "Control de stock en tiendas libres (free shops).",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentos/ManualDesa-wgestiendaslibres.pdf"
+    ]
+  },
+  "wsces": {
+    "name": "WSCES — Coraza Electrónica de Seguridad",
+    "description": "Coraza Electrónica de Seguridad para operaciones aduaneras.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSCES/ManualDesa-wgesprecintosdepfis.pdf"
+    ]
+  },
+  "wdigdepfiel": {
+    "name": "WDigDepFiel — Digitalización Depositario Fiel",
+    "description": "Digitalización del Depositario Fiel.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentos/ManualDesaDigDepFiel.pdf"
+    ]
+  },
+  "wdepmovimientos": {
+    "name": "WDEPMOVIMIENTOS — Movimientos Ingreso/Egreso",
+    "description": "Movimientos de ingreso y egreso para terminales y depositarios.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WDEPMOVIMIENTOS/wdepmovimientos-ManualParaElDesarrollador.pdf"
+    ]
+  },
+  "wenysa": {
+    "name": "WEnysa — Eventos Entrada/Salida Vehículos",
+    "description": "Recepción de eventos de entrada y salida de vehículos.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/wEnysa/wEnysa-ManualDesarrollador.pdf"
+    ]
+  },
+  "wssv": {
+    "name": "WSSV — Seguimiento Vehicular",
+    "description": "Seguimiento vehicular para operaciones aduaneras. Incluye generación de rutas con Google Earth.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/WSSV/WSSV-ManualParaElDesarrollador.pdf"
+    ]
+  }
+}
