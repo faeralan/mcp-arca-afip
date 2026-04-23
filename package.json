@@ -1,0 +1,67 @@
+{
+  "name": "mcp-arca-afip",
+  "version": "0.1.0",
+  "description": "MCP server for ARCA/AFIP web services documentation — hybrid semantic + BM25 search over 50+ official Argentine tax-agency web services.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "afip",
+    "arca",
+    "argentina",
+    "facturacion-electronica",
+    "wsfe",
+    "wsaa",
+    "rag",
+    "hybrid-search"
+  ],
+  "author": "faeralan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faeralan/mcp-arca-afip.git"
+  },
+  "homepage": "https://github.com/faeralan/mcp-arca-afip#readme",
+  "bugs": {
+    "url": "https://github.com/faeralan/mcp-arca-afip/issues"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-arca-afip": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "data/index.db",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --out-dir dist --clean",
+    "dev": "tsx watch src/index.ts",
+    "ingest:build": "tsx ingest/build-index.ts",
+    "ingest:coverage": "tsx ingest/coverage-report.ts",
+    "test": "tsx test/smoke.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.1.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "better-sqlite3": "^9.6.0",
+    "cheerio": "^1.0.0",
+    "pdfjs-dist": "^4.6.82",
+    "sqlite-vec": "^0.1.9",
+    "undici": "^6.19.8",
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^20.14.10",
+    "tsup": "^8.2.4",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

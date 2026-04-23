@@ -1,0 +1,9 @@
+node_modules/
+dist/
+data/
+ingest/.cache/
+.git/
+.env*
+*.db-journal
+*.db-wal
+*.db-shm

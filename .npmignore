@@ -1,0 +1,15 @@
+ingest/
+test/
+.github/
+Dockerfile
+docker-compose.yml
+.dockerignore
+tsconfig.json
+*.ts
+!dist/**/*.d.ts
+.nvmrc
+.env*
+ingest/.cache/
+*.db-journal
+*.db-wal
+*.db-shm

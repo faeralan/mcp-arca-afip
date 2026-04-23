@@ -1,0 +1,57 @@
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write  # for npm provenance
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      # The pre-built SQLite index is not committed to git. Rebuild it in CI so the
+      # published npm package ships with data/index.db ready to use.
+      - name: Cache HuggingFace embedding model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-multilingual-e5-small-${{ runner.os }}
+
+      - name: Cache crawled documents + embeddings
+        uses: actions/cache@v4
+        with:
+          path: ingest/.cache
+          key: ingest-cache-${{ hashFiles('ingest/sources.json') }}-${{ github.run_id }}
+          restore-keys: |
+            ingest-cache-${{ hashFiles('ingest/sources.json') }}-
+            ingest-cache-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build index (download AFIP docs + embed)
+        run: npm run ingest:build
+
+      - name: Smoke tests
+        run: npm test
+
+      - name: Build server bundle
+        run: npm run build
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

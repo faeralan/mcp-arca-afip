@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Cache HuggingFace embedding model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-multilingual-e5-small-${{ runner.os }}
+
+      - name: Cache ingest downloads + embeddings
+        uses: actions/cache@v4
+        with:
+          path: ingest/.cache
+          key: ingest-cache-${{ hashFiles('ingest/sources.json') }}-${{ github.run_id }}
+          restore-keys: |
+            ingest-cache-${{ hashFiles('ingest/sources.json') }}-
+            ingest-cache-
+
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run build
+      - run: npm run ingest:build
+      - run: npm test
