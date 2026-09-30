@@ -48,9 +48,12 @@ jobs:
       - name: Run coverage report
         id: coverage
         continue-on-error: true
+        shell: bash
         run: |
+          # $? after a pipe is tee's exit code (always 0); PIPESTATUS[0] is the report's.
+          set +e
           npm run ingest:coverage | tee coverage.log
-          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
 
       - name: Open issue if new AFIP docs detected
         if: steps.coverage.outputs.exit_code != '0'
@@ -59,11 +62,12 @@ jobs:
           script: |
             const fs = require('fs');
             const log = fs.readFileSync('coverage.log', 'utf8');
-            const missing = log.match(/=== MISSING[\s\S]*?=== /)?.[0] ?? '(could not extract)';
+            // Capture the MISSING and NOT-indexed sections (everything up to the discovery section).
+            const missing = log.match(/=== MISSING[\s\S]*?(?==== INDEXED)/)?.[0] ?? '(could not extract)';
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `Coverage: new AFIP docs detected (${new Date().toISOString().slice(0, 10)})`,
-              body: `The monthly coverage check found URLs on AFIP's site that are not indexed.\n\nReview the workflow output and update \`ingest/sources.json\` if any are legitimate new web services.\n\n\`\`\`\n${missing.slice(0, 8000)}\n\`\`\``,
+              body: `The monthly coverage check found URLs on AFIP's site that are not indexed, or sources.json entries that failed to crawl.\n\nReview the workflow output and update \`ingest/sources.json\` (new web services, newer manual versions, or broken URLs).\n\n\`\`\`\n${missing.slice(0, 8000)}\n\`\`\``,
               labels: ['coverage', 'automated'],
             });
