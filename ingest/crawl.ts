@@ -9,6 +9,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CACHE_DIR = path.join(__dirname, '.cache');
 const UA = 'mcp-arca-afip/0.1.0 (+https://github.com/alanfaer/mcp-arca-afip)';
 const RATE_LIMIT_MS = 1200;
+// Some manuals are 5+ MB and AFIP's servers are slow; 30s was not enough (WSCPE, WSLSP).
+const FETCH_TIMEOUT_MS = 120_000;
+const MAX_ATTEMPTS = 3;
 
 export interface DownloadedDoc {
   wsId: string;
@@ -33,21 +36,31 @@ async function cachedFetch(url: string): Promise<Buffer> {
     return readFile(cachePath);
   }
 
-  await sleep(RATE_LIMIT_MS);
-  console.log(`  Downloading: ${url}`);
+  for (let attempt = 1; ; attempt++) {
+    await sleep(RATE_LIMIT_MS * attempt);
+    console.log(`  Downloading: ${url}${attempt > 1 ? ` (attempt ${attempt}/${MAX_ATTEMPTS})` : ''}`);
 
-  const res = await fetch(url, {
-    headers: { 'User-Agent': UA },
-    signal: AbortSignal.timeout(30_000),
-  });
+    try {
+      const res = await fetch(url, {
+        headers: { 'User-Agent': UA },
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      });
 
-  if (!res.ok) {
-    throw new Error(`HTTP ${res.status} for ${url}`);
+      if (!res.ok) {
+        // 4xx won't fix itself on retry
+        const err = new Error(`HTTP ${res.status} for ${url}`);
+        if (res.status < 500) (err as any).permanent = true;
+        throw err;
+      }
+
+      const buf = Buffer.from(await res.arrayBuffer());
+      await writeFile(cachePath, buf);
+      return buf;
+    } catch (err) {
+      if ((err as any).permanent || attempt >= MAX_ATTEMPTS) throw err;
+      console.warn(`    ${(err as Error).message} — retrying`);
+    }
   }
-
-  const buf = Buffer.from(await res.arrayBuffer());
-  await writeFile(cachePath, buf);
-  return buf;
 }
 
 function detectType(url: string, content: Buffer): 'html' | 'pdf' | 'wsdl' {

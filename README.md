@@ -16,7 +16,7 @@ Servidor **MCP** (Model Context Protocol) que expone la documentación oficial d
 
 ## Qué incluye
 
-- **51 web services indexados** (todos los documentados en `afip.gob.ar/ws/documentacion`)
+- **55 web services indexados** (todos los documentados en `afip.gob.ar/ws/documentacion`)
 - **3.832 chunks** con embeddings locales (sin API keys, sin llamadas a servicios pagos)
 - **4 tools MCP**: `search_docs`, `list_web_services`, `get_web_service`, `get_document`
 - **Búsqueda híbrida** con cascade BM25 + semantic + RRF (Reciprocal Rank Fusion)
@@ -24,7 +24,7 @@ Servidor **MCP** (Model Context Protocol) que expone la documentación oficial d
 
 ### Servicios cubiertos
 
-Autenticación, certificados, factura electrónica (WSFEv1, WSMTXCA, WSBFEv1, WSFEX, WSCT, WSSEG), padrón A4/A5/A10/A13/A100, constancia de inscripción, WSCDCV1, carta de porte electrónica, liquidación primaria de granos, sector pecuario, caña de azúcar, tabaco, lechería, bienes de uso, aduana (WSSV, WGESINV, WDEPMOVIMIENTOS, WSCES, etc.), retenciones SIRE-IVA, Trabajo F931, y más.
+Autenticación, certificados, factura electrónica (WSFEv1, WSMTXCA, WSBFEv1, WSFEX, WSCT, WSSEG), padrón A4/A5/A10/A13/A100, constancia de inscripción, WSCDCV1, carta de porte electrónica, liquidación primaria de granos, sector pecuario, caña de azúcar, tabaco, lechería, bienes de uso, aduana (WSSV, WGESINV, WDEPMOVIMIENTOS, WSCES, etc.), retenciones SIRE-IVA, Trabajo F931, Mi Argentina, pago de VEPs (SETIWS-PAGO-API), y más.
 
 ---
 

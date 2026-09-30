@@ -51,8 +51,77 @@ function extractLinks(html: string, baseUrl: string): string[] {
 }
 
 function normalizeUrl(u: string): string {
-  // Normalize: lowercase the ?WSDL / ?wsdl, decode %20, drop trailing slash
-  return u.replace(/\?WSDL$/i, '?WSDL').replace(/%20/g, ' ').replace(/\/$/, '');
+  // Normalize: lowercase the ?WSDL / ?wsdl, decode %20, drop index.html and trailing slash
+  return u.replace(/\?WSDL$/i, '?WSDL').replace(/%20/g, ' ').replace(/\/index\.html$/, '').replace(/\/$/, '');
+}
+
+// Navigation pages that only list other docs — nothing worth indexing on their own.
+const IGNORED_URLS = new Set([
+  'https://www.afip.gob.ar/ws/documentacion/catalogo.asp',
+  'https://www.afip.gob.ar/ws/documentacion/default.asp',
+]);
+
+function dirOf(u: string): string {
+  return u.slice(0, u.lastIndexOf('/') + 1).toLowerCase();
+}
+
+async function lastModified(u: string): Promise<number | null> {
+  try {
+    const res = await fetch(u.replace(/ /g, '%20'), {
+      method: 'HEAD',
+      headers: { 'User-Agent': UA },
+      signal: AbortSignal.timeout(20_000),
+    });
+    const lm = res.ok ? res.headers.get('last-modified') : null;
+    return lm ? Date.parse(lm) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * AFIP keeps every historical manual version online in the same folder (manual_wslsp_1.0.pdf …
+ * manual_wslsp_2.0.6.pdf). A missing URL is treated as a *version* of an indexed doc when it
+ * lives in a folder we already cover. Filenames aren't comparable (WSLPGV19 vs wslpg_1.24),
+ * so Last-Modified decides whether it's newer or older. An unnumbered file with the same
+ * Last-Modified as the indexed doc (e.g. WSSV/RutaDeCalibracion.pdf) stays as MISSING.
+ */
+async function classifyMissing(missing: string[], sourceUrls: Set<string>) {
+  const sourcesByDir = new Map<string, string[]>();
+  for (const u of sourceUrls) {
+    const d = dirOf(u);
+    sourcesByDir.set(d, [...(sourcesByDir.get(d) ?? []), u]);
+  }
+
+  const newDocs: string[] = [];
+  const newer: Array<{ url: string; replaces: string[] }> = [];
+  const older: string[] = [];
+  const lmCache = new Map<string, number | null>();
+  const lm = async (u: string) => {
+    if (!lmCache.has(u)) lmCache.set(u, await lastModified(u));
+    return lmCache.get(u)!;
+  };
+
+  for (const u of missing) {
+    const siblings = sourcesByDir.get(dirOf(u));
+    if (!siblings || !u.endsWith('.pdf')) {
+      newDocs.push(u);
+      continue;
+    }
+    const mine = await lm(u);
+    const theirs = (await Promise.all(siblings.map(lm))).filter((t): t is number => t !== null);
+    const numbered = /\d/.test(u.slice(u.lastIndexOf('/') + 1));
+    if (mine === null || theirs.length === 0) {
+      newDocs.push(u); // can't tell — surface it rather than hide it
+    } else if (mine > Math.max(...theirs)) {
+      newer.push({ url: u, replaces: siblings });
+    } else if (mine < Math.max(...theirs) || numbered) {
+      older.push(u);
+    } else {
+      newDocs.push(u); // same upload batch, no version number: likely a companion doc
+    }
+  }
+  return { newDocs, newer, older };
 }
 
 async function main() {
@@ -85,13 +154,25 @@ async function main() {
   db.close();
 
   // Report 1: URLs AFIP publishes but we DON'T have in sources.json
+  const missingAll = [...liveUrls].filter((u) => !sourceUrls.has(u) && !IGNORED_URLS.has(u)).sort();
+  console.log(`\nChecking Last-Modified for ${missingAll.length} unlisted URLs...`);
+  const { newDocs: missing, newer, older } = await classifyMissing(missingAll, sourceUrls);
+
   console.log('\n\n=== MISSING: on AFIP site, not in sources.json ===');
-  const missing = [...liveUrls].filter((u) => !sourceUrls.has(u)).sort();
   if (missing.length === 0) {
     console.log('(none — sources.json covers everything AFIP currently links)');
   } else {
     for (const u of missing) console.log(`  - ${u}`);
     console.log(`\n  → ${missing.length} URLs faltantes`);
+  }
+
+  // Report 1b: a newer manual version than the one in sources.json
+  console.log('\n\n=== NEWER VERSION: newer than the indexed doc in the same folder ===');
+  if (newer.length === 0) {
+    console.log('(none)');
+  } else {
+    for (const { url, replaces } of newer) console.log(`  - ${url}\n      (en sources.json: ${replaces.join(', ')})`);
+    console.log(`\n  → ${newer.length} versiones nuevas`);
   }
 
   // Report 2: URLs in sources.json but NOT actually indexed (crawl failures)
@@ -115,14 +196,20 @@ async function main() {
     if (discovered.length > 10) console.log(`  ... y ${discovered.length - 10} más`);
   }
 
-  // Report 4: stats
+  // Report 4: superseded manual versions — informational only
+  console.log('\n\n=== OLDER VERSIONS (ignored, superseded by an indexed doc) ===');
+  console.log(`  ${older.length} URLs`);
+
+  // Report 5: stats. Old versions and navigation pages don't count against coverage.
+  const relevant = [...liveUrls].filter((u) => !IGNORED_URLS.has(u) && !older.includes(u));
   console.log('\n\n=== Stats ===');
   console.log(`  AFIP live URLs (index pages):      ${liveUrls.size}`);
+  console.log(`  ... excl. old versions / nav:      ${relevant.length}`);
   console.log(`  sources.json URLs:                 ${sourceUrls.size}`);
   console.log(`  Actually indexed in DB:            ${indexedUrls.size}`);
-  console.log(`  Coverage (AFIP ∩ indexed / AFIP):  ${((([...liveUrls].filter((u) => indexedUrls.has(u)).length) / liveUrls.size) * 100).toFixed(1)}%`);
+  console.log(`  Coverage (relevant ∩ indexed):     ${((relevant.filter((u) => indexedUrls.has(u)).length / relevant.length) * 100).toFixed(1)}%`);
 
-  if (missing.length > 0) process.exit(1);
+  if (missing.length > 0 || newer.length > 0 || notIndexed.length > 0) process.exit(1);
 }
 
 main().catch((err) => {

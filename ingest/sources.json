@@ -44,7 +44,7 @@
     "name": "WSFEv1 — Factura Electrónica (comprobantes A/B/C/M)",
     "description": "Autorización de comprobantes electrónicos tipo A, B, C y M sin detalle de ítem. CAE y CAEA. R.G. N° 4.291. El WS más usado para emisión de facturas.",
     "entrypoints": [
-      "https://www.afip.gob.ar/ws/documentacion/manuales/manual-desarrollador-ARCA-COMPG-v4-1.pdf",
+      "https://www.afip.gob.ar/ws/documentacion/manuales/manual-desarrollador-ARCA-COMPG.pdf",
       "https://www.afip.gob.ar/fe/ayuda/documentos/wsfev1-RG-4291.pdf",
       "https://www.afip.gob.ar/ws/documentacion/ws-factura-electronica.asp",
       "https://wswhomo.afip.gov.ar/wsfev1/service.asmx?WSDL"
@@ -55,7 +55,8 @@
     "description": "Autorización de comprobantes A y B con detalle de ítems. Incluye código de producto MTX. CAE y CAEA. R.G. N° 2.904.",
     "entrypoints": [
       "https://www.afip.gob.ar/ws/documentacion/manuales/Web-Service-MTXCA-v25.pdf",
-      "https://www.afip.gob.ar/fe/ayuda/documentos/wsmtxca-RG-2904.pdf"
+      "https://www.afip.gob.ar/fe/ayuda/documentos/wsmtxca-RG-2904.pdf",
+      "https://www.afip.gob.ar/fe/ayuda/documentos/Web-Service-MTXCA-Homo-Externa.pdf"
     ]
   },
   "wsbfev1": {
@@ -127,7 +128,7 @@
     "name": "WS-SR-Padron-A13 — Consulta a Padrón Alcance 13",
     "description": "Consulta al padrón de contribuyentes - nivel 13 con domicilio fiscal e impuestos inscriptos.",
     "entrypoints": [
-      "https://www.afip.gob.ar/ws/ws-padron-a13/manual-ws-sr-padron-a13-v1.3.pdf",
+      "https://www.afip.gob.ar/ws/ws-padron-a13/manual-ws-sr-padron-a13-v1.4.pdf",
       "https://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA13?WSDL"
     ]
   },
@@ -227,6 +228,7 @@
     "name": "JAZA Service — Juegos de Azar",
     "description": "Web service para informar datos de juegos de azar.",
     "entrypoints": [
+      "https://www.afip.gob.ar/juegosdeazar/documentos/WebServiceJAZA.pdf",
       "https://www.afip.gob.ar/juegosdeazar/documentos/Web_Service_JAZA_20240122_v1.0.5.pdf"
     ]
   },
@@ -256,14 +258,14 @@
     "name": "WSLPG — Liquidación Primaria de Granos",
     "description": "Liquidación primaria de operaciones de compraventa de granos.",
     "entrypoints": [
-      "https://www.afip.gob.ar/ws/WSLiquiGranos/manual_wslpg_1.24.pdf"
+      "https://www.afip.gob.ar/ws/WSLiquiGranos/manual-wslpg.pdf"
     ]
   },
   "wslsp": {
     "name": "WSLSP — Liquidación Sector Pecuario",
     "description": "Liquidación de operaciones del sector pecuario.",
     "entrypoints": [
-      "https://www.afip.gob.ar/ws/WSLSP/manual-wslsp-2.0.4.pdf"
+      "https://www.afip.gob.ar/ws/WSLSP/manual_wslsp_2.0.6.pdf"
     ]
   },
 
@@ -401,7 +403,45 @@
     "name": "WSSV — Seguimiento Vehicular",
     "description": "Seguimiento vehicular para operaciones aduaneras. Incluye generación de rutas con Google Earth.",
     "entrypoints": [
-      "https://www.afip.gob.ar/ws/WSSV/WSSV-ManualParaElDesarrollador.pdf"
+      "https://www.afip.gob.ar/ws/WSSV/WSSV-ManualParaElDesarrollador.pdf",
+      "https://www.afip.gob.ar/ws/WSSV/ManualDeGeneracionDeRutasConGoogleEarth.pdf",
+      "https://www.afip.gob.ar/ws/WSSV/AgregarDatosDeRutas.pdf",
+      "https://www.afip.gob.ar/ws/WSSV/RutaDeCalibracion.pdf"
+    ]
+  },
+  "wutigopdeclaraciones": {
+    "name": "WutiGOPDeclaraciones — Consulta de Declaraciones Aduaneras (GOP)",
+    "description": "Consulta detallada de declaraciones aduaneras: carátula, ítems, liquidaciones y pendientes (PndListaGOPDetallada, ListaGOPCaratDeta, ListaGOPItemsDeta, ListaGOPLiquiDeta). Nuevo esquema.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/USAduaneros/documentos/WutiGOPDeclaraciones_NuevoEsquema_Manual-Usuario_.pdf"
+    ]
+  },
+
+  "miargentina": {
+    "name": "MiArgentina Web Service",
+    "description": "Integración con Mi Argentina: envío de documentos al ciudadano, incluido el servicio de recibo digital.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/Mi-argentina/MiArgentina-Webservice-Manual-del-Desarrollador-v2.2.pdf"
+    ]
+  },
+  "setiws_pago_api": {
+    "name": "SETIWS-PAGO-API — Pago de VEPs vía API",
+    "description": "API REST de pago de Volantes Electrónicos de Pago (VEP) con autenticación Bearer JWT (WSAA-AUTH-PROXY). Incluye anexo del formulario F3012.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/SETIWS-PAGO-API/Manual_para_el_desarrollador_setiws-pago-api.pdf",
+      "https://www.afip.gob.ar/ws/SETIWS-PAGO-API/Manual_para_el_desarrollador_setiws-pago-api-anexo-F3012.pdf"
+    ]
+  },
+
+  "general": {
+    "name": "Documentación general de Web Services ARCA",
+    "description": "Arquitectura general de los WS, homologación externa, autoridades certificantes, servicios migrados a nuevas URLs y cronograma de cambios de TLS.",
+    "entrypoints": [
+      "https://www.afip.gob.ar/ws/documentacion/arquitectura-general.asp",
+      "https://www.afip.gob.ar/ws/documentacion/homologacion-externa.asp",
+      "https://www.afip.gob.ar/ws/documentacion/autoridades-certificantes.asp",
+      "https://www.afip.gob.ar/ws/documentacion/servicios-migrados.asp",
+      "https://www.afip.gob.ar/ws/documentacion/cronograma-TLS.asp"
     ]
   }
 }
